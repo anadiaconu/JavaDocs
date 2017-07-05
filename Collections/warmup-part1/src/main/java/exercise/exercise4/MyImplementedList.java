@@ -1,5 +1,6 @@
 package exercise.exercise4;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 
@@ -24,7 +25,7 @@ import java.util.Iterator;
  * @author Cristian.Dumitru
  * @since 7/3/2017.
  */
-public class MyImplementedList<E> implements Iterable <E>{
+public class MyImplementedList<E> implements Iterable <E>, Comparable<E>{
 
     /**
      * The maximum accepted load property of the data structure.
@@ -147,6 +148,10 @@ public class MyImplementedList<E> implements Iterable <E>{
         }
     }
 
+    public int compareTo(E o) {
+        return 0;
+    }
+
     class MyIterator implements Iterator<E> {
             private MyImplementedList<E> lst;
 
@@ -178,6 +183,9 @@ public class MyImplementedList<E> implements Iterable <E>{
         return new MyIterator(this);
     }
 
+    public void sort(Comparator<? super E> c){
+
+    }
 
     //TODO c) create the boolean add(E e) method that adds at the end of the data structure an element
     //TODO pay attention to the LOAD_FACTOR of the data structure
