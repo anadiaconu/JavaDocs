@@ -1,5 +1,8 @@
 package exercise.exercise4;
 
+import java.util.Iterator;
+
+
 /**
  * You should implement from zero a data structure that acts as an ArrayList.
  * We have a default capacity of {@link MyImplementedList#DEFAULT_CAPACITY} elements of type <code>E</code>.
@@ -21,7 +24,7 @@ package exercise.exercise4;
  * @author Cristian.Dumitru
  * @since 7/3/2017.
  */
-public class MyImplementedList<E> {
+public class MyImplementedList<E> implements Iterable <E>{
 
     /**
      * The maximum accepted load property of the data structure.
@@ -58,9 +61,123 @@ public class MyImplementedList<E> {
     //TODO a) implement the empty constructor for the your data structure
     public MyImplementedList() {
         //TODO a) HINT - DEFAULT_CAPACITY, capacityAfterExtending and elementData properties
+        capacityAfterExtending = DEFAULT_CAPACITY;
+        size = 0;
+        elementData = new Object[capacityAfterExtending];
+
+    }
+    //TODO b) create the int size() method that returns the size of the data structure
+    public int size(){
+        return size;
     }
 
-    //TODO b) create the int size() method that returns the size of the data structure
+    public boolean add (E e){
+        extendCapacity();
+        elementData[size]=e;
+        size++;
+        return true;
+    }
+
+    public boolean contains (Object o){
+        for(int i=0; i<size; i++){
+            if(o.equals(elementData[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean isEmpty() {
+
+        return size == 0;
+
+    }
+    public int indexOf(Object o) {
+        if (o == null) {
+            for (int i = 0; i < size; i++)
+                if (elementData[i]==null)
+                    return i;
+        } else {
+            for (int i = 0; i < size; i++)
+                if (o.equals(elementData[i]))
+                    return i;
+        }
+        return -1;
+    }
+
+    public int lastIndexOf (Object o){
+        int index = 0;
+        int found = -1;
+        while(index < size){
+            if (elementData[index] == o)
+                found = index;
+            index++;
+        }
+        return found;
+    }
+
+    public E get(int index){
+        return (E)elementData[index];
+    }
+
+    public E set(int index, E element){
+        E aux = (E)elementData[index];
+        elementData[index] = element;
+        return aux;
+    }
+
+    public E remove (int index){
+        E aux = (E)elementData[index];
+        for(int i = index; i<size-1; i++)
+            elementData[index] = elementData [index+1];
+        size--;
+        return aux;
+    }
+
+    public void extendCapacity(){
+        if(size/capacityAfterExtending > LOAD_FACTOR)
+        {
+            capacityAfterExtending = capacityAfterExtending * INCREASE_SIZE_FACTOR;
+            Object[] elementData2 = new Object[capacityAfterExtending];
+            for (int i = 0; i<elementData.length;i++){
+                elementData2[i]=elementData[i];
+            }
+            elementData=elementData2;
+        }
+    }
+
+    class MyIterator implements Iterator<E> {
+            private MyImplementedList<E> lst;
+
+            private int currentIndex = 0;
+
+        public MyIterator(MyImplementedList<E> es) {
+            this.lst=es;
+        }
+
+        public boolean hasNext() {
+                return currentIndex < lst.size();
+            }
+
+            public E next() {
+                if ( hasNext())
+                    return (E)lst.get(currentIndex++);
+                return null;
+
+            }
+
+            public void remove() {
+                lst.remove(currentIndex-1);
+                currentIndex--;
+            }
+
+    }
+
+    public Iterator<E> iterator(){
+        return new MyIterator(this);
+    }
+
 
     //TODO c) create the boolean add(E e) method that adds at the end of the data structure an element
     //TODO pay attention to the LOAD_FACTOR of the data structure
