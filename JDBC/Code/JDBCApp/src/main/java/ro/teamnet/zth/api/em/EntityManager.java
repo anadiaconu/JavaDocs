@@ -1,6 +1,7 @@
 package ro.teamnet.zth.api.em;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ana.Diaconu on 13-Jul-17.
@@ -11,5 +12,12 @@ Long getNextIdVal(String tableName, String columnIdName);
 
 <T> Object insert(T entity);
 <T> List<T> findAll(Class<T> entityClass);
+
+<T> T update(T entity);
+void delete(Object entity);
+<T> List<T> findByParams(Class<T> entityClass, Map<String, Object> params);
+
+//<T> List<T>findEmployees(String departmentName);
+
 
 }

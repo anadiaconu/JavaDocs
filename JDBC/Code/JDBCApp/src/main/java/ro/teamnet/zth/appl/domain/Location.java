@@ -80,6 +80,6 @@ public class Location {
                 ", postalCode='" + postalCode + '\'' +
                 ", city='" + city + '\'' +
                 ", stateProvince='" + stateProvince + '\'' +
-                '}';
+                '}' + "\n";
     }
 }
